@@ -14,6 +14,6 @@ In settings.py
 
 In urls.py
 
-1. TODO
+1. url(r'^billbalance/', include('YOUR_APPS_FOLDER.billbalance.urls')), to urlpatterns
 
 Look at this project settings.py and urls.py for an example.
