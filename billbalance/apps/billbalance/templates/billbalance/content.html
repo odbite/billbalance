@@ -1,0 +1,95 @@
+{% extends "billbalance/base.html" %}
+
+{% block content %}
+		<div class="container">
+			<div class="row-fluid">
+
+				<div class="span4 well">
+					<h2>Summary</h2>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Money</th>
+							</tr>
+						</thead>
+						<tbody data-bind="foreach: bills">
+							<tr>
+								<td data-bind="text: person"></td>
+								<td><span class="badge" data-bind="text: money, css: { 'badge-important': money < 0, 'badge-success': money > 0 }"></span></td>
+							</tr>
+
+						</tbody>
+					</table>
+
+					<span class="badge badge-success">People own you money</span>
+					<span class="badge badge-important">You owe people money</span>
+
+				</div>
+				<div class="span4 well">
+					<h2>Add bill</h2>
+					<input type="text" placeholder="Summa" class="input-block-level" data-bind="value: money" />
+					<select class="input-block-level" data-bind="options: availableCategorys, optionsText: 'categoryName', value: selectedCategory, optionsCaption: 'Select a category'"></select>
+
+					<h5>Who will share the bill? <span class="pull-right"><!--<a data-bind="click: showHideField.bind($data, $root.showNewPersonField)" href="#"><i class="icon-plus-sign"></i> Add person</a> </span>--></h5>
+
+					<div data-bind="visible: showNewPersonField">
+
+						<input type="text" placeholder="Add new person" class="span8" data-bind="value: newPerson" />
+						<button class="pull-right btn btn-primary span4" data-bind="click: addPerson">
+							Add Person
+						</button>
+
+					</div>
+
+					<ul class="nav nav-pills" data-bind="foreach: bills">
+						<li data-bind="css: { 'active': $root.selectedSharePersons.indexOf(person) != -1 }">
+							<a href="#" data-bind="text: person, click: $root.changeSharePersons"></a>
+						</li>
+
+					</ul>
+
+					<div class="alert alert-info">
+						<p>
+							Person who pays
+						</p>
+						<select class="input-block-level" data-bind="options: persons, optionsText: 'forename', optionsValue: 'forename', value: selectedPayPerson"></select>
+						<input type="text" placeholder="Desciption" class="input-block-level" data-bind="value: description" />
+						<input type="text" placeholder="Date" class="input-block-level" data-bind="value: date" />
+					</div>
+
+					<button class="btn btn-large btn-block btn-primary" data-bind="click: addBill">
+						Add bill
+					</button>
+
+				</div>
+
+				<div class="span4 well">
+					<h2>History</h2>
+					<table data-bind="visible: billHistory().length > 0" class="table table-hover">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Money</th>
+								<th>Date</th>
+							</tr>
+						</thead>
+						<tbody data-bind="foreach: billHistory">
+							<tr>
+								<td data-bind="text: person"></td>
+								<td data-bind="text: money"></td>
+								<td data-bind="text: date"></td>
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+
+				<div class="span12 well" data-bind="text: ko.toJSON($root)">
+
+				</div>
+
+			</div>
+		</div>
+{% endblock %}
+		
