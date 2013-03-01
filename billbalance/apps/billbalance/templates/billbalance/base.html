@@ -6,8 +6,16 @@
 		<meta charset="utf-8">
 		<title>Billbalance</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		
-		<link href="{% static "css/main.min.css" %}" rel="stylesheet">
+		<style>
+			body {
+				padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+			}
+			a:focus, a:active, input:focus, input:active {
+				outline: none !important;
+			}
+
+		</style>
+		<link href="{% static "billbalance/css/main.min.css" %}" rel="stylesheet">
 	</head>
 	<body>
 
@@ -16,26 +24,6 @@
 				<div class="container">
 					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
 					<a class="brand" href="#">Billbalance</a>
-					<div class="nav-collapse collapse">
-
-						<ul class="nav block pull-right">
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-wrench icon-white"></i> <strong>My settings</strong> <b class="caret"></b></a>
-								<ul class="dropdown-menu">
-									<li>
-										<a href="#">Add group</a>
-									</li>
-									<li>
-										<a href="#">Recurring events</a>
-									</li>
-									<li class="divider"></li>
-									<li>
-										<a href="#">Log out</a>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div><!--/.nav-collapse -->
 				</div>
 			</div>
 		</div>

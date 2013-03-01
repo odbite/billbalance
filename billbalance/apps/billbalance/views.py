@@ -3,5 +3,6 @@ from django.http import HttpResponse
 from models import *
 
 def home(request):
-   return HttpResponse('It\'s working')
+   return render_to_response('billbalance/content.html')
+   #return HttpResponse('It\'s working')
 
