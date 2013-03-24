@@ -6,23 +6,15 @@
 		<meta charset="utf-8">
 		<title>Billbalance</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<style>
-			body {
-				padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-			}
-			a:focus, a:active, input:focus, input:active {
-				outline: none !important;
-			}
 
-		</style>
-		<link href="{% static "billbalance/css/main.min.css" %}" rel="stylesheet">
+		<link href="{% static "billbalance/css/main.css" %}" rel="stylesheet">
 	</head>
 	<body>
 
 		<div class="navbar navbar-inverse navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container">
-					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
+					
 					<a class="brand" href="#">Billbalance</a>
 				</div>
 			</div>
@@ -33,10 +25,6 @@
 		<!-- Le javascript
 		================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
-		<script src="http://code.jquery.com/jquery-latest.js"></script>
-		<script src="{% static "billbalance/js/bootstrap.js" %}"></script>
-		<script src="{% static "billbalance/js/mobiscroll-2.3.1.custom.min.js" %}"></script>
-		<script src="{% static "billbalance/js/knockout.js" %}"></script>
 		<script src="{% static "billbalance/js/main.js" %}"></script>
 
 	</body>

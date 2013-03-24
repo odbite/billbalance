@@ -5,7 +5,7 @@ from django.conf.urls import patterns, include, url
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^iwantmyownmoon/', include('billbalance.apps.billbalance.urls')),
+    url(r'^bill-1.0/', include('billbalance.apps.billbalance.urls')),
     # Examples:
     # url(r'^$', 'billbalance.views.home', name='home'),
     # url(r'^billbalance/', include('billbalance.foo.urls')),

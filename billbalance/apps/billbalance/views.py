@@ -4,5 +4,5 @@ from models import *
 
 def home(request):
    return render_to_response('billbalance/content.html')
-   #return HttpResponse('It\'s working')
+ 
 
