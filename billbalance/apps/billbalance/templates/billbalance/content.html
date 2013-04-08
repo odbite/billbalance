@@ -13,12 +13,11 @@
 								<th>Money</th>
 							</tr>
 						</thead>
-						<tbody data-bind="foreach: bills">
+						<tbody class="persons">
 							<tr>
-								<td data-bind="text: person"></td>
-								<td><span class="badge" data-bind="text: money, css: { 'badge-important': money < 0, 'badge-success': money > 0 }"></span></td>
+								<td class="name" ></td>
+								<td><span class="money badge"></span></td>
 							</tr>
-
 						</tbody>
 					</table>
 
