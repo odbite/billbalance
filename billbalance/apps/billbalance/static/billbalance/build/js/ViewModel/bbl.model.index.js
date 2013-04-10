@@ -5,6 +5,7 @@ if (typeof(bbl.model) == 'undefined') bbl.model = { }
 if (typeof(bbl.model.index) == 'undefined') bbl.model.index = { }
 
 
+
 // DEFINED SUBCLASSES
 function Persons(data) {
 	this.forename = ko.observable(data.forename);
@@ -53,8 +54,8 @@ bbl.model.index.initializeViewModel = function (pageSettings) {
 		// Persons
 		newPerson: ko.observable(),
 		persons: ko.observableArray([]),
-		selectedPayPerson: ko.observable("Linus"),
-		selectedSharePersons: ko.observableArray(["Linus"]),
+		selectedPayPerson: ko.observable(),
+		selectedSharePersons: ko.observableArray([]),
 	}
 	
 	// Operations
@@ -117,9 +118,6 @@ bbl.model.index.initializeViewModel = function (pageSettings) {
 		else field.showNewPersonField(true);
 	}
 	
-	viewModel.loadData = function() {
-		// TODO: Use to get data from model
-	}
 
 	return viewModel;
 }

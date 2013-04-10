@@ -11,6 +11,20 @@ b.b("jqueryTmplTemplateEngine",b.qa)}"function"===typeof require&&"object"===typ
  * For reusable logic across all view mediators
  */
 
+// Lazy initialize our namespace context: bbl.mediator.common
+if (typeof(bbl) == 'undefined') bbl = { }
+if (typeof(bbl.mediator) == 'undefined') bbl.mediator = { }
+if (typeof(bbl.mediator.common) == 'undefined') bbl.mediator.common = { }
+
+if (typeof(console) != 'undefined' && console) console.info("bbl.mediator.common loading!");
+
+bbl.mediator.common.createViewMediator = function (pageSettings) {
+	// Create the view Savings Goal view-specific view model
+	var viewModel = bbl.model.common.initializeViewModel(pageSettings);
+	
+	if (typeof(console) != 'undefined' && console) console.info("bbl.mediator.common ready!");
+}
+
 /*
  * ViewMediator will include Javascript code mediating interactions between Views and ViewModels 
  * 
@@ -77,9 +91,30 @@ bbl.mediator.index.createViewMediator = function (pageSettings) {
 	if (typeof(console) != 'undefined' && console) console.info("bbl.mediator.index data loaded and reday!");
 	
 	// Declare the HTML element-level data bindings
-	$(".persons").attr("data-bind","foreach: bills");
-	$(".persons .name").attr("data-bind","text: person");
-	$(".persons .money").attr("data-bind","text: money, css: { 'badge-important': money < 0, 'badge-success': money > 0 }");
+	$(".summary-persons").attr("data-bind","foreach: bills");
+	$(".summary-persons-name").attr("data-bind","text: person");
+	$(".summary-persons-money").attr("data-bind","text: money, css: { 'badge-important': money < 0, 'badge-success': money > 0 }");
+	
+	$(".bill-add").attr("data-bind","value: money");
+	$(".bill-category").attr("data-bind","options: availableCategorys, optionsText: 'categoryName', value: selectedCategory, optionsCaption: 'Select a category'");
+	
+	$(".bill-share").attr("data-bind","foreach: bills"); 
+	$(".bill-share-persons-selected").attr("data-bind","css: { 'active': $root.selectedSharePersons.indexOf(person) != -1 }"); 
+	$(".bill-share-person").attr("data-bind","text: person, click: $root.changeSharePersons"); 
+	
+	$(".bill-pay-person").attr("data-bind","options: persons, optionsText: 'forename', optionsValue: 'forename', value: selectedPayPerson"); 
+	$(".bill-description").attr("data-bind","value: description"); 
+	$(".bill-date").attr("data-bind","value: date"); 
+	$(".bill-add").attr("data-bind","click: addBill");
+	
+	$(".bill-history-show").attr("data-bind","visible: billHistory().length > 0");
+	$(".bill-history").attr("data-bind","foreach: billHistory");
+	$(".bill-history").attr("data-bind","foreach: billHistory");
+	$(".bill-history-person").attr("data-bind","text: person");
+	$(".bill-history-money").attr("data-bind","text: money");
+	$(".bill-history-date").attr("data-bind","text: date");
+	
+	$(".bill-display-data").attr("data-bind","text: ko.toJSON($root)");
 	
 	// Ask KnockoutJS to data-bind the view model to the view
 	var viewNode = $('#main-view')[0];
@@ -101,24 +136,43 @@ bbl.mediator.index.setViewModel = function(viewModel) {
  * For reusable logic across all types of ViewModels
  */
 
-function namespace(namespaceString) {
-    var parts = namespaceString.split('.'),
-        parent = window,
-        currentPart = '';    
-        
-    for(var i = 0, length = parts.length; i < length; i++) {
-        currentPart = parts[i];
-        parent[currentPart] = parent[currentPart] || {};
-        parent = parent[currentPart];
-    }
-    
-    return parent;
-}
+// Lazy initialize our namespace context: bbl.model.common
+if (typeof(bbl) == 'undefined') bbl = { }
+if (typeof(bbl.model) == 'undefined') bbl.model = { }
+if (typeof(bbl.model.common) == 'undefined') bbl.model.common = { }
 
+bbl.model.common.initializeViewModel = function (pageSettings) {
+	// We can use properties of the pageSettings as default values for any of our ValueModels
+	// If pageSettings are not provided we'll initialize an empty object
+	if (typeof(pageSettings) == 'undefined') var pageSettings = { }
+	
+	var viewModel = {};
+	
+	viewModel.loadData = function() {
+		// TODO: Use to get data from model
+	}
+	
+	viewModel.namespace = function(namespaceString) {
+	    var parts = namespaceString.split('.'),
+	        parent = window,
+	        currentPart = '';    
+	        
+	    for(var i = 0, length = parts.length; i < length; i++) {
+	        currentPart = parts[i];
+	        parent[currentPart] = parent[currentPart] || {};
+	        parent = parent[currentPart];
+	    }
+	    
+	    return parent;
+	}
+
+	return viewModel;
+}
 // Lazy initialize our namespace context: bbl.model.index
 if (typeof(bbl) == 'undefined') bbl = { }
 if (typeof(bbl.model) == 'undefined') bbl.model = { }
 if (typeof(bbl.model.index) == 'undefined') bbl.model.index = { }
+
 
 
 // DEFINED SUBCLASSES
@@ -169,8 +223,8 @@ bbl.model.index.initializeViewModel = function (pageSettings) {
 		// Persons
 		newPerson: ko.observable(),
 		persons: ko.observableArray([]),
-		selectedPayPerson: ko.observable("Linus"),
-		selectedSharePersons: ko.observableArray(["Linus"]),
+		selectedPayPerson: ko.observable(),
+		selectedSharePersons: ko.observableArray([]),
 	}
 	
 	// Operations
@@ -233,9 +287,6 @@ bbl.model.index.initializeViewModel = function (pageSettings) {
 		else field.showNewPersonField(true);
 	}
 	
-	viewModel.loadData = function() {
-		
-	}
 
 	return viewModel;
 }
@@ -246,6 +297,7 @@ $(document).ready(function(){
 	var pageSettings = { }
 	
 	// Create / launch our view mediator(s)
+	bbl.mediator.common.createViewMediator(pageSettings);
 	bbl.mediator.index.createViewMediator(pageSettings);
 
 	if (typeof(console) != 'undefined' && console) console.info("InitializeApplication done ...");

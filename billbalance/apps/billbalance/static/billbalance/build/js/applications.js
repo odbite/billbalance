@@ -6,6 +6,7 @@ $(document).ready(function(){
 	var pageSettings = { }
 	
 	// Create / launch our view mediator(s)
+	bbl.mediator.common.createViewMediator(pageSettings);
 	bbl.mediator.index.createViewMediator(pageSettings);
 
 	if (typeof(console) != 'undefined' && console) console.info("InitializeApplication done ...");

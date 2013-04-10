@@ -64,9 +64,30 @@ bbl.mediator.index.createViewMediator = function (pageSettings) {
 	if (typeof(console) != 'undefined' && console) console.info("bbl.mediator.index data loaded and reday!");
 	
 	// Declare the HTML element-level data bindings
-	$(".persons").attr("data-bind","foreach: bills");
-	$(".persons .name").attr("data-bind","text: person");
-	$(".persons .money").attr("data-bind","text: money, css: { 'badge-important': money < 0, 'badge-success': money > 0 }");
+	$(".summary-persons").attr("data-bind","foreach: bills");
+	$(".summary-persons-name").attr("data-bind","text: person");
+	$(".summary-persons-money").attr("data-bind","text: money, css: { 'badge-important': money < 0, 'badge-success': money > 0 }");
+	
+	$(".bill-add").attr("data-bind","value: money");
+	$(".bill-category").attr("data-bind","options: availableCategorys, optionsText: 'categoryName', value: selectedCategory, optionsCaption: 'Select a category'");
+	
+	$(".bill-share").attr("data-bind","foreach: bills"); 
+	$(".bill-share-persons-selected").attr("data-bind","css: { 'active': $root.selectedSharePersons.indexOf(person) != -1 }"); 
+	$(".bill-share-person").attr("data-bind","text: person, click: $root.changeSharePersons"); 
+	
+	$(".bill-pay-person").attr("data-bind","options: persons, optionsText: 'forename', optionsValue: 'forename', value: selectedPayPerson"); 
+	$(".bill-description").attr("data-bind","value: description"); 
+	$(".bill-date").attr("data-bind","value: date"); 
+	$(".bill-add").attr("data-bind","click: addBill");
+	
+	$(".bill-history-show").attr("data-bind","visible: billHistory().length > 0");
+	$(".bill-history").attr("data-bind","foreach: billHistory");
+	$(".bill-history").attr("data-bind","foreach: billHistory");
+	$(".bill-history-person").attr("data-bind","text: person");
+	$(".bill-history-money").attr("data-bind","text: money");
+	$(".bill-history-date").attr("data-bind","text: date");
+	
+	$(".bill-display-data").attr("data-bind","text: ko.toJSON($root)");
 	
 	// Ask KnockoutJS to data-bind the view model to the view
 	var viewNode = $('#main-view')[0];
